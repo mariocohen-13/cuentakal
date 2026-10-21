@@ -1,0 +1,28 @@
+LUNES 19
+Desayuno: Desayuno continental
+Comida: Buffet de ensaladas / Macarrones con atún y tomate / Ropa vieja estilo canario / Fruta de temporada
+Cena: Ensalada de arroz / Crema de calabacín con picatoste / Salchichas a la sidra / Fruta de temporada
+MARTES 20
+Desayuno: Desayuno continental
+Comida: Buffet de ensaladas / Pimientos rellenos / Muslitos en salsa / Fruta de temporada
+Cena: Ensalada de arroz / Espinacas rehogadas con zanahoria / Tortilla paisana / Lácteo
+MIÉRCOLES 21
+Desayuno: Desayuno continental
+Comida: Buffet de ensaladas / Pisto manchego con huevo / Pollo a la cerveza / Fruta de temporada
+Cena: Ensalada de arroz / Sopa de lluvia / Lomo a la plancha con patatas fritas / Fruta de temporada
+JUEVES 22
+Desayuno: Desayuno continental
+Comida: Buffet de ensaladas / Fabada / Perca en salsa verde / Fruta de temporada
+Cena: Ensalada de arroz / Revuelto de ajetes / Pepito venezolano con papas arrugadas / Fruta de temporada
+VIERNES 23
+Desayuno: Desayuno continental
+Comida: Gazpacho / Lasaña mixta / Ternera salteada con verduras / Fruta de temporada
+Cena: Ensalada de arroz / Brócoli salteado con jamón / Tortilla española / Fruta de temporada
+SÁBADO 24
+Desayuno: Desayuno continental
+Comida: Buffet de ensaladas / Arroz a banda / Muslitos al chilindrón / Fruta de temporada
+Cena: Ensalada de arroz / Sopa de picadillo / Merluza a la romana con mayonesa / Fruta de temporada
+DOMINGO 25
+Desayuno: Desayuno continental
+Comida: Buffet de ensaladas / Espaguetis amatriciana / Chuleta de cerdo con pimiento / Fruta de temporada
+Cena: Ensalada de arroz / Vichyssoise / Sándwich vegetal con patatas asadas / Fruta de temporada
