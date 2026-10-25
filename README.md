@@ -36,6 +36,6 @@ las imágenes se guardan como referencia para transcribirlas (no hay OCR para no
 ## Tests
 
 ```bash
-npm test           # lógica: fechas, cálculos, parser de menú, planificador, historial, persistencia
+npm test           # lógica: fechas, cálculos, parser de menú, historial, persistencia
 npm run build      # comprobación de tipos + compilación
 ```

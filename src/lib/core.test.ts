@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { addDays, toKey, weekStart, weekdayIndex } from './date';
 import { estimateDish } from './estimate';
 import { buildWeekMenu, parseMenuText } from './menuParser';
-import { planRest } from './planner';
 import { builtinFood, perUnitFor, searchFoods, BUILTIN_FOODS } from './foods';
 import { entryMacros, kcalFromMacros } from './macros';
 import { defaultState, loadState, saveState, STORAGE_KEY } from './store';
@@ -97,41 +96,6 @@ Lunes: Puré de verduras, Huevos revueltos`);
     expect(w.days[0].comida[0].macros.kcal).toBe(420);
     expect(w.days[0].comida[0].accuracy).toBe('known');
     expect(w.days[0].comida[1].accuracy).toBe('estimate');
-  });
-});
-
-describe('planificador', () => {
-  const goals = { kcal: 2200, protein: 140, carbs: 250, fat: 70 };
-  it('propone merienda y cena con cantidades realistas', () => {
-    const r = planRest({ goals, consumed: { kcal: 1200, protein: 70, carbs: 140, fat: 40 }, meriendaDone: false, cenaDone: false });
-    expect(r.pending).toEqual(['merienda', 'cena']);
-    const merienda = r.options.merienda![0];
-    const cena = r.options.cena![0];
-    expect(merienda.totals.kcal).toBeGreaterThan(150);
-    expect(merienda.totals.kcal).toBeLessThan(500);
-    expect(cena.totals.kcal).toBeGreaterThan(450);
-    expect(cena.totals.kcal).toBeLessThan(900);
-    for (const o of [...r.options.merienda!, ...r.options.cena!]) {
-      for (const it of o.items) {
-        if (it.unit !== 'ud') expect(it.qty).toBeLessThanOrEqual(300);
-        else expect(it.qty).toBeLessThanOrEqual(4);
-      }
-    }
-  });
-  it('no fuerza nada si ya se ha llegado al objetivo', () => {
-    const r = planRest({ goals, consumed: { kcal: 2300, protein: 150, carbs: 260, fat: 80 }, meriendaDone: false, cenaDone: false });
-    expect(r.pending).toEqual([]);
-    expect(r.message).toMatch(/superas/);
-  });
-  it('avisa cuando falta mucha proteína en lugar de forzar cantidades', () => {
-    const r = planRest({ goals: { ...goals, protein: 220 }, consumed: { kcal: 1500, protein: 40, carbs: 200, fat: 50 }, meriendaDone: true, cenaDone: false });
-    expect(r.notes.some((n) => n.includes('proteína'))).toBe(true);
-  });
-  it('puede proponer la cena del colegio', () => {
-    const cenaMenu = buildWeekMenu(parseMenuText('Lunes\nCena: Crema de verduras / Pollo asado / Yogur').days, '2026-10-19', {}).days[0].cena;
-    const r = planRest({ goals, consumed: { kcal: 1500, protein: 90, carbs: 180, fat: 50 }, meriendaDone: true, cenaDone: false, cenaMenu });
-    expect(r.options.cena![0].fromMenu).toBe(true);
-    expect(r.options.cena![0].menuDishes!.length).toBeGreaterThan(0);
   });
 });
 

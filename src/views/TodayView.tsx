@@ -11,7 +11,6 @@ import { AccuracyBadge, Icon, MacroBar, Ring, toast } from '../components/ui';
 import { AddFoodSheet } from '../components/AddFoodSheet';
 import { EntrySheet, unitText } from '../components/EntrySheet';
 import { MenuDayCard } from '../components/MenuDayCard';
-import { PlannerCard } from '../components/PlannerCard';
 
 export function TodayView({ date, setDate, goMenu }: { date: string; setDate: (d: string) => void; goMenu: () => void }) {
   const s = useAppState();
@@ -108,8 +107,6 @@ export function TodayView({ date, setDate, goMenu }: { date: string; setDate: (d
           </div>
         );
       })}
-
-      <PlannerCard date={date} />
 
       <div className="card">
         <label className="row" style={{ fontSize: 14, color: 'var(--text)', margin: 0 }}>
