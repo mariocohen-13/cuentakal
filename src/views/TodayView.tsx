@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import type { LogEntry, MealKey } from '../lib/types';
-import { MEALS } from '../lib/types';
+import type { LogEntry } from '../lib/types';
 import { useAppState } from '../lib/store';
 import { saveMeal, setDayClosed } from '../lib/actions';
 import { addDays, formatLong, formatShort, todayKey } from '../lib/date';
-import { byMeal, dayTotals, entriesFor, dayStatus, STATUS_LABEL } from '../lib/stats';
+import { dayTotals, entriesFor, dayStatus, STATUS_LABEL } from '../lib/stats';
 import { entryMacros, fmt, r1 } from '../lib/macros';
 import { uid } from '../lib/id';
 import { AccuracyBadge, Icon, MacroBar, Ring, toast } from '../components/ui';
@@ -14,11 +13,10 @@ import { MenuDayCard } from '../components/MenuDayCard';
 
 export function TodayView({ date, setDate, goMenu }: { date: string; setDate: (d: string) => void; goMenu: () => void }) {
   const s = useAppState();
-  const [adding, setAdding] = useState<MealKey | null>(null);
+  const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState<LogEntry | null>(null);
   const list = entriesFor(s, date);
   const totals = dayTotals(list);
-  const meals = byMeal(list);
   const g = s.goals;
   const isToday = date === todayKey();
   const closed = s.closedDays.includes(date);
@@ -67,46 +65,37 @@ export function TodayView({ date, setDate, goMenu }: { date: string; setDate: (d
 
       <MenuDayCard date={date} onOpenMenu={goMenu} />
 
-      {MEALS.map(({ key, label }) => {
-        const items = meals[key];
-        const t = dayTotals(items);
-        return (
-          <div className="card meal" key={key}>
-            <div className="meal-head">
-              <h3 className="grow">{label}</h3>
-              {items.length > 0 && <span className="kc num">{fmt(t.kcal)} kcal</span>}
-              <button className="icon-btn" onClick={() => setAdding(key)} aria-label={`Añadir a ${label}`} style={{ color: 'var(--accent)' }}><Icon.plus /></button>
-            </div>
-            {items.length > 0 && (
-              <div className="meal-macros num">
-                <span><span className="dot" style={{ background: 'var(--protein)' }} /> P {r1(t.protein)} g</span>
-                <span><span className="dot" style={{ background: 'var(--carbs)' }} /> C {r1(t.carbs)} g</span>
-                <span><span className="dot" style={{ background: 'var(--fat)' }} /> G {r1(t.fat)} g</span>
-                <span className="grow" />
-                <button className="btn ghost small" style={{ padding: 0 }} onClick={() => {
-                  const name = prompt('Nombre para este plato habitual:', `${label} habitual`);
-                  if (!name) return;
-                  saveMeal({ id: uid(), name, items: items.map(({ name, qty, unit, unitLabel, perUnit, accuracy, foodId, dishKey }) => ({ name, qty, unit, unitLabel, perUnit, accuracy, foodId, dishKey })) });
-                  toast('Guardado en habituales');
-                }}>Guardar como habitual</button>
+      <div className="card meal">
+        <div className="meal-head">
+          <h3 className="grow">Lo que he comido</h3>
+          {list.length > 0 && <span className="kc num">{fmt(totals.kcal)} kcal</span>}
+          <button className="icon-btn" onClick={() => setAdding(true)} aria-label="Añadir alimento" style={{ color: 'var(--accent)' }}><Icon.plus /></button>
+        </div>
+        {list.length === 0 && <div className="empty-state">Añade alimentos con + o desde el menú del colegio.</div>}
+        {list.map((e) => {
+          const m = entryMacros(e);
+          return (
+            <button className="entry" key={e.id} onClick={() => setEditing(e)}>
+              <div className="grow">
+                <div className="name">{e.name}</div>
+                <div className="meta">{unitText(e)} · P {r1(m.protein)} · C {r1(m.carbs)} · G {r1(m.fat)}</div>
               </div>
-            )}
-            {items.map((e) => {
-              const m = entryMacros(e);
-              return (
-                <button className="entry" key={e.id} onClick={() => setEditing(e)}>
-                  <div className="grow">
-                    <div className="name">{e.name}</div>
-                    <div className="meta">{unitText(e)} · P {r1(m.protein)} · C {r1(m.carbs)} · G {r1(m.fat)}</div>
-                  </div>
-                  {e.accuracy === 'estimate' && <AccuracyBadge a="estimate" />}
-                  <span className="kc">{fmt(m.kcal)}</span>
-                </button>
-              );
-            })}
+              {e.accuracy === 'estimate' && <AccuracyBadge a="estimate" />}
+              <span className="kc">{fmt(m.kcal)}</span>
+            </button>
+          );
+        })}
+        {list.length > 0 && (
+          <div className="meal-macros num">
+            <button className="btn ghost small" style={{ padding: 0 }} onClick={() => {
+              const name = prompt('Nombre para esta comida habitual:', 'Comida habitual');
+              if (!name) return;
+              saveMeal({ id: uid(), name, items: list.map(({ name, qty, unit, unitLabel, perUnit, accuracy, foodId, dishKey }) => ({ name, qty, unit, unitLabel, perUnit, accuracy, foodId, dishKey })) });
+              toast('Guardado en habituales');
+            }}>Guardar todo como habitual</button>
           </div>
-        );
-      })}
+        )}
+      </div>
 
       <div className="card">
         <label className="row" style={{ fontSize: 14, color: 'var(--text)', margin: 0 }}>
@@ -116,7 +105,7 @@ export function TodayView({ date, setDate, goMenu }: { date: string; setDate: (d
         <div className="tiny muted mt">Sirve para distinguir en el historial un día con consumo realmente bajo de un día registrado a medias.</div>
       </div>
 
-      {adding && <AddFoodSheet date={date} meal={adding} onClose={() => setAdding(null)} />}
+      {adding && <AddFoodSheet date={date} meal="otros" onClose={() => setAdding(false)} />}
       {editing && <EntrySheet entry={editing} onClose={() => setEditing(null)} />}
     </>
   );

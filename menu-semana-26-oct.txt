@@ -1,0 +1,28 @@
+LUNES 26
+Desayuno: Desayuno continental
+Comida: Buffet de ensaladas / Sopa de cocido / Cocido completo / Natillas
+Cena: Ensalada de pasta / Judías verdes con jamón / Salchipapas / Fruta de temporada
+MARTES 27
+Desayuno: Desayuno continental
+Comida: Buffet de ensaladas / Judías pintas con arroz / Pescado al horno / Fruta de temporada
+Cena: Ensalada de pasta / Crema de coliflor / Carcamusas / Lácteo
+MIÉRCOLES 28
+Desayuno: Desayuno continental
+Comida: Buffet de ensalada / Arroz al horno / Filete de ternera con guarnición / Fruta de temporada
+Cena: Ensalada de pasta / Sopa de pescado con fideos gordos / San Jacobo con puré de patata / Fruta de temporada
+JUEVES 29
+Desayuno: Desayuno continental
+Comida: Buffet de ensalada / Menestra de verduras / Albóndigas en salsa con patatas cuadradas / Fruta de temporada
+Cena: Ensalada de pasta / Guisantes con zanahoria / Tacos mexicanos / Fruta de temporada
+VIERNES 30
+Desayuno: Desayuno continental
+Comida: Buffet de ensalada / Espirales al pesto / Contra en salsa de zanahoria / Fruta de temporada
+Cena: Ensalada de pasta / Brócoli con patata y mayonesa / Salchichas con tomate / Lácteo
+SÁBADO 31
+Desayuno: Desayuno continental
+Comida: Buffet de ensaladas / Cuscús con verduras / Codillo asado / Fruta de temporada
+Cena: Ensalada de arroz / Crema de calabacín / Cinta de lomo con pimientos / Fruta de temporada
+DOMINGO 1
+Desayuno: Desayuno continental
+Comida: Buffet de ensalada / Cuscús con verduras / Codillo asado / Fruta de temporada
+Cena: Ensalada de arroz / Brócoli con patata y mayonesa / Salchichas con tomate / Fruta de temporada
