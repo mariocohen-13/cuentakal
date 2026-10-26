@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { LogEntry } from '../lib/types';
 import { useAppState } from '../lib/store';
-import { saveMeal, setDayClosed } from '../lib/actions';
+import { saveMeal } from '../lib/actions';
 import { addDays, formatLong, formatShort, todayKey } from '../lib/date';
 import { dayTotals, entriesFor, dayStatus, STATUS_LABEL } from '../lib/stats';
 import { entryMacros, fmt, r1 } from '../lib/macros';
@@ -19,7 +19,6 @@ export function TodayView({ date, setDate, goMenu }: { date: string; setDate: (d
   const totals = dayTotals(list);
   const g = s.goals;
   const isToday = date === todayKey();
-  const closed = s.closedDays.includes(date);
   const estKcal = list.filter((e) => e.accuracy === 'estimate').reduce((a, e) => a + entryMacros(e).kcal, 0);
   const status = dayStatus(s, date);
 
@@ -63,8 +62,6 @@ export function TodayView({ date, setDate, goMenu }: { date: string; setDate: (d
         )}
       </div>
 
-      <MenuDayCard date={date} onOpenMenu={goMenu} />
-
       <div className="card meal">
         <div className="meal-head">
           <h3 className="grow">Lo que he comido</h3>
@@ -97,13 +94,7 @@ export function TodayView({ date, setDate, goMenu }: { date: string; setDate: (d
         )}
       </div>
 
-      <div className="card">
-        <label className="row" style={{ fontSize: 14, color: 'var(--text)', margin: 0 }}>
-          <input type="checkbox" checked={closed} onChange={(e) => setDayClosed(date, e.target.checked)} style={{ width: 'auto' }} />
-          <span className="grow">Día completo: he registrado todo lo que he comido</span>
-        </label>
-        <div className="tiny muted mt">Sirve para distinguir en el historial un día con consumo realmente bajo de un día registrado a medias.</div>
-      </div>
+      <MenuDayCard date={date} onOpenMenu={goMenu} />
 
       {adding && <AddFoodSheet date={date} meal="otros" onClose={() => setAdding(false)} />}
       {editing && <EntrySheet entry={editing} onClose={() => setEditing(null)} />}
